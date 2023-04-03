@@ -1,12 +1,12 @@
 package be.technobel.emobiblio.service;
 
-import be.technobel.emobiblio.entity.Book;
+import be.technobel.emobiblio.models.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public class BookService {
+public interface BookService {
     public List<Book> findAllBooks();
 
     public List<Book> searchBooks(String keyword);

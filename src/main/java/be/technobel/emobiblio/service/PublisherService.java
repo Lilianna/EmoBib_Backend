@@ -1,8 +1,10 @@
 package be.technobel.emobiblio.service;
 
-import be.technobel.emobiblio.entity.Publisher;
+import be.technobel.emobiblio.models.entity.Publisher;
 
-public class PublisherService {
+import java.util.List;
+
+public interface PublisherService {
     public List<Publisher> findAllPublishers();
 
     public Publisher findPublisherById(Long id);

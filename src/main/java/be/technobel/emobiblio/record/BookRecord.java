@@ -1,4 +1,0 @@
-package be.technobel.emobiblio.record;
-
-public record BookRecord(Long id, String isbn, String name, String serialName, String description) {
-}

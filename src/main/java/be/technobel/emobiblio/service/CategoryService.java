@@ -1,10 +1,10 @@
 package be.technobel.emobiblio.service;
 
-import be.technobel.emobiblio.entity.Category;
+import be.technobel.emobiblio.models.entity.Category;
 
 import java.util.List;
 
-public class CategoryService {
+public interface CategoryService {
 
     public List<Category> findAllCategories();
 

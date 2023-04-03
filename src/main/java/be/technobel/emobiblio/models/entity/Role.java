@@ -1,4 +1,4 @@
-package be.technobel.emobiblio.entity;
+package be.technobel.emobiblio.models.entity;
 
 import jakarta.persistence.*;
 
@@ -10,10 +10,7 @@ public class Role {
     private Long id;
     private String name;
 
-    public Role(String name) {
-        super();
-        this.name = name;
-    }
+
 
     public Long getId() {
         return id;

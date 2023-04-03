@@ -1,4 +1,4 @@
-package be.technobel.emobiblio.entity;
+package be.technobel.emobiblio.models.entity;
 
 import jakarta.persistence.*;
 
@@ -6,8 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "publishers")
-public class Publisher {
+@Table(name ="author")
+public class Author{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -15,12 +16,29 @@ public class Publisher {
     @Column(name = "name", length = 100, nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "publishers")
+    @Column(name = "description", length = 250, nullable = false)
+    private String description;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE }, mappedBy = "authors")
     private Set<Book> books = new HashSet<Book>();
 
-    public Publisher() {
-        super();
+    public Author(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
+
+    public Author() {
+
+    }
+
+
+
+
+
+
+
+
 
     public Long getId() {
         return id;
@@ -36,6 +54,14 @@ public class Publisher {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<Book> getBooks() {

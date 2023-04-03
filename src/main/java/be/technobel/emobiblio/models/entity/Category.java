@@ -1,4 +1,4 @@
-package be.technobel.emobiblio.entity;
+package be.technobel.emobiblio.models.entity;
 
 import jakarta.persistence.*;
 

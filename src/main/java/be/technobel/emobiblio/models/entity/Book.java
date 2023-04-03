@@ -1,8 +1,10 @@
-package be.technobel.emobiblio.entity;
+package be.technobel.emobiblio.models.entity;
 
 import jakarta.persistence.*;
+import org.apache.coyote.Request;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -38,6 +40,12 @@ public class Book {
     @JoinTable(name = "books_publishers", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
             @JoinColumn(name = "publisher_id") })
     private Set<Publisher> publishers = new HashSet<Publisher>();
+
+    @Column(name = "borrower_access", nullable = false)
+    private boolean borrowerAccess = true;
+
+//    @OneToMany(mappedBy = "book")
+//    private Set<Borrowing> borrowings = new LinkedHashSet<>();
 
     public Book(String isbn, String name, String serialName, String description) {
         this.isbn = isbn;

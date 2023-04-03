@@ -1,22 +1,22 @@
 package be.technobel.emobiblio.service;
 
-import be.technobel.emobiblio.entity.Author;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import be.technobel.emobiblio.models.dto.AuthorDTO;
+import be.technobel.emobiblio.models.entity.Author;
+import be.technobel.emobiblio.models.form.AuthorForm;
 
 import java.util.List;
 
-public class AuthorService {
-    public List<Author> findAllAuthors();
+public interface AuthorService {
+//    public List<AuthorDTO> getAll();
 
-    public Author findAuthorById(Long id);
+    public List<AuthorDTO> findAllAuthors();
 
-    public void createAuthor(Author author);
+    public AuthorDTO findAuthorById(Long id);
 
-    public void updateAuthor(Author author);
+    public void createAuthor(AuthorForm author);
+
+    public void updateAuthor(Long id, AuthorForm author);
 
     public void deleteAuthor(Long id);
-
-    public Page<Author> findPaginated(Pageable pageable);
 
 }
