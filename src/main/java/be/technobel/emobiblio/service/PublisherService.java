@@ -1,17 +1,18 @@
 package be.technobel.emobiblio.service;
 
+import be.technobel.emobiblio.models.dto.PublisherDTO;
 import be.technobel.emobiblio.models.entity.Publisher;
 
 import java.util.List;
 
 public interface PublisherService {
-    public List<Publisher> findAllPublishers();
+    public List<PublisherDTO> findAllPublishers();
 
-    public Publisher findPublisherById(Long id);
+    public PublisherDTO findPublisherById(Long id);
 
-    public void createPublisher(Publisher publisher);
+    public void createPublisher(PublisherDTO publisher);
 
-    public void updatePublisher(Publisher publisher);
+    public void updatePublisher(PublisherDTO publisher);
 
     public void deletePublisher(Long id);
 }

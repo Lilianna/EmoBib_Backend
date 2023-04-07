@@ -1,84 +1,42 @@
 package be.technobel.emobiblio.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import be.technobel.emobiblio.models.dto.AuthorDTO;
+import be.technobel.emobiblio.models.form.AuthorForm;
+import be.technobel.emobiblio.service.AuthorService;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-@Controller
+@RestController
+@ResponseBody
+//@RequestBody: retrieving the HTTP request body and automatically converting it into the Java object
+// tell controller that the object returned is automatically serialized into JSON
+// and passed back into HttpResponse object
+//@ResponseStatus(HttpStatus.CREATED)
+
+@CrossOrigin("*")
+@RequestMapping("/authors")
 public class AuthorController {
-    final AuthorService authorService;
+    private final AuthorService authorService;
 
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService){
         this.authorService = authorService;
     }
 
-    @RequestMapping("/authors")
-    public String findAllAuthors(Model model, @RequestParam("page") Optional<Integer> page,
-                                 @RequestParam("size") Optional<Integer> size) {
-
-        var currentPage = page.orElse(1);
-        var pageSize = size.orElse(5);
-        var bookPage = authorService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
-
-        model.addAttribute("authors", bookPage);
-
-        int totalPages = bookPage.getTotalPages();
-        if (totalPages > 0) {
-            var pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
-        return "list-authors";
+    // GET request to retrieve all books
+    @GetMapping(value = "/", produces = "application/json")
+    // to map HTTP GET request onto specific handler method
+    public List<AuthorDTO> getAll() {
+        return authorService.getdAllAuthors();
     }
 
-    @RequestMapping("/author/{id}")
-    public String findAuthorById(@PathVariable("id") Long id, Model model) {
+    @PostMapping
+    //PostMapping("/api/create": mapping HTTP POST request onto specific handler method
+    public void insert(@RequestBody @Valid AuthorForm form)
+    { authorService.createAuthor(form);}
 
-        model.addAttribute("author", authorService.findAuthorById(id));
-        return "list-author";
-    }
 
-    @GetMapping("/addAuthor")
-    public String showCreateForm(Author author) {
-        return "add-author";
-    }
 
-    @RequestMapping("/add-author")
-    public String createAuthor(Author author, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-author";
-        }
 
-        authorService.createAuthor(author);
-        model.addAttribute("author", authorService.findAllAuthors());
-        return "redirect:/authors";
-    }
-
-    @GetMapping("/updateAuthor/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-
-        model.addAttribute("author", authorService.findAuthorById(id));
-        return "update-author";
-    }
-
-    @RequestMapping("/update-author/{id}")
-    public String updateAuthor(@PathVariable("id") Long id, Author author, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            author.setId(id);
-            return "update-author";
-        }
-
-        authorService.updateAuthor(author);
-        model.addAttribute("author", authorService.findAllAuthors());
-        return "redirect:/authors";
-    }
-
-    @RequestMapping("/remove-author/{id}")
-    public String deleteAuthor(@PathVariable("id") Long id, Model model) {
-        authorService.deleteAuthor(id);
-
-        model.addAttribute("author", authorService.findAllAuthors());
-        return "redirect:/authors";
-    }
 
 }

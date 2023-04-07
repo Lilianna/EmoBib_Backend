@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Emobib library </title>
+</head>
+<body>
+<h1> Welcome to Emobib Library page </h1>
+<h2>  A community-based Buddhist library in Liege</h2>
+<a href = "/book"> Book </a>
+
+<table>
+    <tr>
+        <td> Book</td>
+        <td> Book title </td>
+        <td> Book author </td>
+    </tr>
+    <tr th:each = "books: ${books}">
+        <td th:text = "${Book.id}"> Book id  </td>
+        <td th:text = "${Book.title}"> Book title   </td>
+        <td th:text = "${Book.title}"> Book author  </td>
+
+    </tr>
+</table>
+
+</body>
+</html>

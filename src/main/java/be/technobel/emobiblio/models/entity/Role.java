@@ -6,10 +6,12 @@ import jakarta.persistence.*;
 @Table(name = "role")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
 
+//    @Enumerated(EnumType.STRING)
+    @Column(name = "name", length = 20)
+    private RoleName name;
 
 
     public Long getId() {
@@ -20,11 +22,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
+    public RoleName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(RoleName name) {
         this.name = name;
     }
 }

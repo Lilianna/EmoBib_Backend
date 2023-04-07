@@ -29,15 +29,7 @@ public class Author{
     }
 
     public Author() {
-
     }
-
-
-
-
-
-
-
 
 
     public Long getId() {

@@ -7,16 +7,15 @@ import be.technobel.emobiblio.models.form.AuthorForm;
 import java.util.List;
 
 public interface AuthorService {
-//    public List<AuthorDTO> getAll();
 
-    public List<AuthorDTO> findAllAuthors();
+    List<AuthorDTO> getAllAuthors();
 
-    public AuthorDTO findAuthorById(Long id);
+    AuthorDTO getAuthorById(Long id);
 
-    public void createAuthor(AuthorForm author);
+    void createAuthor(AuthorForm author);
 
-    public void updateAuthor(Long id, AuthorForm author);
+    void updateAuthor(Long id, AuthorForm author);
 
-    public void deleteAuthor(Long id);
+   void deleteAuthor(Long id);
 
 }

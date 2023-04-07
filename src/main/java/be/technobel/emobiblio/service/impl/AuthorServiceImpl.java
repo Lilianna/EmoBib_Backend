@@ -13,20 +13,19 @@ import java.util.List;
 @Service
 public class AuthorServiceImpl implements AuthorService{
     final AuthorRepository authorRepository;
-
     public AuthorServiceImpl(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
     @Override
-    public List<AuthorDTO> findAllAuthors() {
+    public List<AuthorDTO> getAllAuthors() {
         return authorRepository.findAll().stream()
                 .map(AuthorDTO::from)
                 .toList();
     }
 
     @Override
-    public AuthorDTO findAuthorById(Long id) {
+    public AuthorDTO getAuthorById(Long id) {
         return authorRepository.findById(id)
                 .map(AuthorDTO::from)
                 .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id)));
@@ -39,13 +38,13 @@ public class AuthorServiceImpl implements AuthorService{
 
     @Override
     public void updateAuthor(Long id, AuthorForm author) {
-        Author toUpdate = authorRepository.findById(id)
+        Author updatedAuthor = authorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id)));
 
-        toUpdate.setName(author.getName());
-        toUpdate.setDescription(author.getDescription());
+        updatedAuthor.setName(author.getName());
+        updatedAuthor.setDescription(author.getDescription());
 
-        authorRepository.save(toUpdate);
+        authorRepository.save(updatedAuthor);
     }
 
     @Override

@@ -1,24 +1,24 @@
 package be.technobel.emobiblio.service;
 
+import be.technobel.emobiblio.models.dto.BookDTO;
 import be.technobel.emobiblio.models.entity.Book;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import be.technobel.emobiblio.models.form.BookForm;
 
 import java.util.List;
 
 public interface BookService {
-    public List<Book> findAllBooks();
+    List<BookDTO> getAllBooks();
 
-    public List<Book> searchBooks(String keyword);
+    List<Book> searchBooks(String keyword);
 
-    public Book findBookById(Long id);
+    BookDTO getBookById(Long id);
 
-    public void createBook(Book book);
+    void createBook(BookForm book);
 
-    public void updateBook(Book book);
+    BookDTO updateBook(Long id, BookForm book);
 
-    public void deleteBook(Long id);
+    void deleteBook(Long id);
 
-    public Page<Book> findPaginated(Pageable pageable);
+//    public Page<Book> findPaginated(Pageable pageable);
 
 }

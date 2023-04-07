@@ -1,15 +1,15 @@
 package be.technobel.emobiblio.models.entity;
 
 import jakarta.persistence.*;
-import org.apache.coyote.Request;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "books")
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,14 +17,20 @@ public class Book {
     @Column(name = "isbn", length = 50, nullable = false, unique = true)
     private String isbn;
 
-    @Column(name = "name", length = 100, nullable = false)
-    private String name;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "serialName", length = 50, nullable = false)
-    private String serialName;
+//    @Column(name = "name", length = 100, nullable = false)
+//    private String name;
+//
+//    @Column(name = "serialName", length = 50, nullable = false)
+//    private String serialName;
 
     @Column(name = "description", length = 250, nullable = false)
     private String description;
+
+    @Column(name = "available",  nullable = false)
+    private boolean available;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
     @JoinTable(name = "books_authors", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
@@ -36,22 +42,25 @@ public class Book {
             @JoinColumn(name = "category_id") })
     private Set<Category> categories = new HashSet<Category>();
 
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "books_publishers", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
             @JoinColumn(name = "publisher_id") })
     private Set<Publisher> publishers = new HashSet<Publisher>();
 
-    @Column(name = "borrower_access", nullable = false)
-    private boolean borrowerAccess = true;
 
-//    @OneToMany(mappedBy = "book")
-//    private Set<Borrowing> borrowings = new LinkedHashSet<>();
 
-    public Book(String isbn, String name, String serialName, String description) {
+    public Book(Long id, String title, String isbn, String name, String serialName, String description, boolean available, Set<Author> authors, Set<Category> categories, Set<Publisher> publishers) {
+        this.id = id;
+        this.title = title;
         this.isbn = isbn;
-        this.name = name;
-        this.serialName = serialName;
+//        this.name = name;
+//        this.serialName = serialName;
         this.description = description;
+        this.available = available;
+        this.authors = authors;
+        this.categories = categories;
+        this.publishers = publishers;
     }
 
     public Book() {
@@ -66,6 +75,14 @@ public class Book {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getIsbn() {
         return isbn;
     }
@@ -73,22 +90,23 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getSerialName() {
+//        return serialName;
+//    }
+//
+//    public void setSerialName(String serialName) {
+//        this.serialName = serialName;
+//    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSerialName() {
-        return serialName;
-    }
-
-    public void setSerialName(String serialName) {
-        this.serialName = serialName;
-    }
 
     public String getDescription() {
         return description;
@@ -96,6 +114,14 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public Set<Author> getAuthors() {
@@ -118,8 +144,10 @@ public class Book {
         return publishers;
     }
 
-    public void setPublishers(Set<Publisher> publishers) {
-        this.publishers = publishers;
-    }
+
+
+//    public void setPublishers( String publishers) {
+//        this.publishers = publishers;
+//    }
 }
 
